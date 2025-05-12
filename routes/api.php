@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\PaiementController;
 use App\Http\Controllers\Api\AvisController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\HistoriqueActiviteController;
+use App\Http\Controllers\Api\DashboardController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('reservations', ReservationController::class);
 
     Route::post('/tags/{tag}/voyages/{voyage}', [TagController::class, 'attachVoyage']);
+    Route::get('/historique', [HistoriqueActiviteController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'stats']);
 });

@@ -2,51 +2,17 @@
 
 namespace App\Observers;
 
-use App\Models\Paiement;
 use App\Notifications\PaiementEffectue;
+use Illuminate\Database\Eloquent\Model;
 
-class PaiementObserver
+class PaiementObserver extends GenericObserver
 {
-    /**
-     * Handle the Paiement "created" event.
-     */
-    public function created(Paiement $paiement): void
+    public function created(Model $paiement): void
     {
-        $user = $paiement->paiementable->user ?? null;
-        if($user){
+        parent::created($paiement);
+
+        if($user = $paiement->paiementable->user ?? null){
             $user->notify(new PaiementEffectue($paiement));
         }
-    }
-
-    /**
-     * Handle the Paiement "updated" event.
-     */
-    public function updated(Paiement $paiement): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Paiement "deleted" event.
-     */
-    public function deleted(Paiement $paiement): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Paiement "restored" event.
-     */
-    public function restored(Paiement $paiement): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Paiement "force deleted" event.
-     */
-    public function forceDeleted(Paiement $paiement): void
-    {
-        //
     }
 }
